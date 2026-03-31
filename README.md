@@ -23,7 +23,7 @@ Set environment variables on your machine:
 
 ```bash
 export APPLE_ID="you@icloud.com"
-export APPLE_APP_PASSWORD="xxxx-xxxx-xxxx-xxxx"
+export APPLE_APP_TOKEN="xxxx-xxxx-xxxx-xxxx"
 ```
 
 ## Usage

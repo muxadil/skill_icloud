@@ -17,7 +17,7 @@ Set these environment variables on the VM:
 
 ```bash
 export APPLE_ID="you@icloud.com"
-export APPLE_APP_PASSWORD="xxxx-xxxx-xxxx-xxxx"
+export APPLE_APP_TOKEN="xxxx-xxxx-xxxx-xxxx"
 ```
 
 Generate an app-specific password at appleid.apple.com → Sign-In and Security → App-Specific Passwords.
