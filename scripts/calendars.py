@@ -158,7 +158,9 @@ def fetch_events(apple_id, app_password, calendar_url, date_from, date_to):
 <cal:calendar-query xmlns:d="DAV:" xmlns:cal="urn:ietf:params:xml:ns:caldav">
   <d:prop>
     <d:getetag/>
-    <cal:calendar-data/>
+    <cal:calendar-data>
+      <cal:expand start="{time_from}" end="{time_to}"/>
+    </cal:calendar-data>
   </d:prop>
   <cal:filter>
     <cal:comp-filter name="VCALENDAR">
