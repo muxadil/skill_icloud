@@ -27,7 +27,18 @@ NS = {
 }
 
 
+def _load_env_file(path="/home/openclaw/.icloud.env"):
+    if os.path.exists(path):
+        with open(path) as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    k, v = line.split("=", 1)
+                    os.environ.setdefault(k.strip(), v.strip())
+
+
 def get_credentials():
+    _load_env_file()
     apple_id = os.environ.get("APPLE_ID", "").strip()
     app_password = os.environ.get("APPLE_APP_TOKEN", os.environ.get("APPLE_APP_PASSWORD", "")).strip()
     if not apple_id or not app_password:
