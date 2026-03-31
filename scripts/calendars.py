@@ -29,9 +29,9 @@ NS = {
 
 def get_credentials():
     apple_id = os.environ.get("APPLE_ID", "").strip()
-    app_password = os.environ.get("APPLE_APP_PASSWORD", "").strip()
+    app_password = os.environ.get("APPLE_APP_TOKEN", os.environ.get("APPLE_APP_PASSWORD", "")).strip()
     if not apple_id or not app_password:
-        print(json.dumps({"error": "APPLE_ID and APPLE_APP_PASSWORD env variables are required"}))
+        print(json.dumps({"error": "APPLE_ID and APPLE_APP_TOKEN env variables are required"}))
         sys.exit(1)
     return apple_id, app_password
 
