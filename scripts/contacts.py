@@ -212,13 +212,19 @@ def parse_vcard(vcard_text):
     return contact
 
 
+def _normalize_phone(phone):
+    return "".join(c for c in phone if c.isdigit() or c == "+")
+
+
 def matches_query(contact, query):
     query = query.lower()
     for field in ("name", "last_name", "first_name", "middle_name", "company", "title", "note"):
         if query in contact.get(field, "").lower():
             return True
-    if any(query in p.lower() for p in contact["phones"]):
-        return True
+    query_digits = _normalize_phone(query)
+    for p in contact["phones"]:
+        if query.lower() in p.lower() or (query_digits and query_digits in _normalize_phone(p)):
+            return True
     if any(query in e.lower() for e in contact["emails"]):
         return True
     if any(query in a.lower() for a in contact["addresses"]):
