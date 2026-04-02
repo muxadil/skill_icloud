@@ -169,11 +169,16 @@ def fetch_contacts(apple_id, app_password, addressbook_url):
 
 def parse_vcard(vcard_text):
     """Parse a vCard string into a simple dict."""
-    contact = {"name": "", "phones": [], "emails": []}
+    contact = {"name": "", "last_name": "", "first_name": "", "middle_name": "", "phones": [], "emails": []}
     for line in vcard_text.splitlines():
         line = line.strip()
         if line.upper().startswith("FN:"):
             contact["name"] = line[3:].strip()
+        elif line.upper().startswith("N:"):
+            parts = line[2:].split(";")
+            contact["last_name"] = parts[0].strip() if len(parts) > 0 else ""
+            contact["first_name"] = parts[1].strip() if len(parts) > 1 else ""
+            contact["middle_name"] = parts[2].strip() if len(parts) > 2 else ""
         elif "TEL" in line.upper() and ":" in line:
             phone = line.split(":", 1)[1].strip()
             if phone:
@@ -187,8 +192,9 @@ def parse_vcard(vcard_text):
 
 def matches_query(contact, query):
     query = query.lower()
-    if query in contact["name"].lower():
-        return True
+    for field in ("name", "last_name", "first_name", "middle_name"):
+        if query in contact.get(field, "").lower():
+            return True
     if any(query in p.lower() for p in contact["phones"]):
         return True
     if any(query in e.lower() for e in contact["emails"]):
